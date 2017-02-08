@@ -1,0 +1,7 @@
+CREATE TABLE `stock_company` (
+  `id` bigint(20) NOT NULL COMMENT '自增id',
+  `stock_id` bigint(20) NOT NULL COMMENT '股票id',
+  `company_id` bigint(20) NOT NULL COMMENT '公司id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='股票公司关系表';
+

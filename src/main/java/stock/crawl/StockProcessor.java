@@ -1,6 +1,5 @@
 package stock.crawl;
 
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -53,6 +52,10 @@ public class StockProcessor implements PageProcessor {
                 String s=list.get(i);
                 s=s.replace("tr","div").replace("td","div");
                 Html h=new Html(s);
+
+
+
+
 
                 String url=h.xpath("//div[@class='tl w3']").links().get();
                 url="http://fund.jrj.com.cn"+url;

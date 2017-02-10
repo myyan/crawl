@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wacai.wpk.bot.core.module.keyweight.mapper.KeyWeightMapper" >
+<mapper namespace="stock.mapper.StockInfoMapper" >
 
-    <resultMap id="BaseResultMap" type="" >
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="keyword_id" property="keywordId" jdbcType="INTEGER" />
-        <result column="topic_id" property="topicId" jdbcType="INTEGER" />
-        <result column="weight" property="weight" jdbcType="DECIMAL" />
-        <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
-        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
-        <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
-        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
-        <result column="active" property="active" jdbcType="INTEGER" />
+    <resultMap id="BaseResultMap" type="stock.po.StockInfo" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="stock_id" property="stockId" jdbcType="VARCHAR" />
+        <result column="stock_name" property="stockName" jdbcType="VARCHAR" />
     </resultMap>
+
+    <sql id="BaseColumnList">
+        id,stock_id,stock_name
+    </sql>
+
+    <insert id="insert" parameterType="stock.po.StockInfo">
+        INSERT INTO stock_info(
+        <include refid="BaseColumnList"/>
+        )
+        VALUES (
+        #{id,jdbcType=BIGINT},
+        #{stockId,jdbcType=VARCHAR},
+        #{stockName,jdbcType=VARCHAR}
+        )
+    </insert>
+
+
 
 
 

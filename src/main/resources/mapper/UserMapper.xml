@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="stock.mapper.UserMapper" >
+
+    <resultMap id="BaseResultMap" type="stock.po.User" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="age" property="age" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id,name,age
+    </sql>
+
+    <insert id="insert" parameterType="stock.po.User">
+        INSERT INTO user(
+        <include refid="BaseColumnList"/>
+        )
+        VALUES (
+        #{id,jdbcType=INTEGER},
+        #{name,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER}
+        )
+    </insert>
+
+
+
+
+
+</mapper>

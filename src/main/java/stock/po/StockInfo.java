@@ -5,6 +5,15 @@ package stock.po;
  */
 public class StockInfo {
     private int id;
-    private long stockId;
+    private String stockId;
     private String stockName;
+
+    @Override
+    public String toString() {
+        return "StockInfo{" +
+                "id=" + id +
+                ", stockId='" + stockId + '\'' +
+                ", stockName='" + stockName + '\'' +
+                '}';
+    }
 }

@@ -1,5 +1,13 @@
 package stock.crawl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import stock.po.Company;
+import stock.po.Fund;
+import stock.service.CompanyService;
+import stock.service.FundService;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -12,6 +20,16 @@ import java.util.List;
  * Created by heiqie on 2017/2/9.
  */
 public class NewFundProcessor implements PageProcessor {
+
+    private Logger log = LoggerFactory.getLogger(NewFundProcessor.class);
+
+    private ApplicationContext context;
+
+    public NewFundProcessor() {
+        context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+    }
+
+    private FundService fundService ;
 
     private final String REG = "http";
 
@@ -37,6 +55,11 @@ public class NewFundProcessor implements PageProcessor {
 
             Html h = new Html(list.get(i).replace("td","div"));
 //            System.out.println(h);
+            String fundCode = h.xpath("//div[1]/text()").get();
+            String fundName = h.xpath("//div[2]/a/text()").get();
+            String dailyGrowthRate = h.xpath("//div[4]/span/text()").get();
+            String monthGrowthRate = h.xpath("//div[5]/span/text()").get();
+            String startAmount = h.xpath("//div[10]/text()").get();
             System.out.println("基金代码:"+h.xpath("//div[1]/text()"));
             System.out.println("基金简介:"+h.xpath("//div[2]/a/text()"));
             System.out.println("最新净值:"+h.xpath("//div[3]/p[1]/text()"));
@@ -48,6 +71,15 @@ public class NewFundProcessor implements PageProcessor {
             System.out.println("今年增长率:"+h.xpath("//div[8]/span/text()"));
             System.out.println("成立以来增长率:"+h.xpath("//div[9]/span/text()"));
             System.out.println("起投金额:"+h.xpath("//div[10]/text()"));
+            fundService = (FundService) context.getBean("fundService");
+            Fund fund = new Fund();
+            fund.setFundCode(fundCode);
+            fund.setFundName(fundName);
+            fund.setDailyGrowthRate(dailyGrowthRate);
+            fund.setMonthlyGrowthRate(monthGrowthRate);
+//            fund.setStartAmount(Float.valueOf(startAmount));
+            int result = fundService.insert(fund);
+            System.out.println(result);
 
 //            System.out.println(list.get(i));
             System.out.println("-------");
@@ -60,10 +92,7 @@ public class NewFundProcessor implements PageProcessor {
 //            }
 //        }
         System.out.println("size:"+list.size());
-        synchronized (this){
-            System.out.println("current : "+count);
-            count++;
-        }
+//
 
 
     }
@@ -74,9 +103,17 @@ public class NewFundProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Spider.create(new NewFundProcessor())
-                .addUrl("https://e.lufunds.com/jijin/allFund?fundGroupId=8472#sortTab")
-                .thread(5)
-                .run();
+
+        NewFundProcessor processor = new NewFundProcessor();
+
+//        Spider.create(processor)
+//                .addUrl(prefix+"1"+suffix)
+//                .run();
+        for (int i = 1; i < 250; i++) {
+            Spider.create(processor)
+                    .addUrl(prefix+i+suffix)
+                    .run();
+        }
+
     }
 }

@@ -20,6 +20,7 @@
     <mappers>
         <mapper resource="mapper/UserMapper.xml" />
         <mapper resource="mapper/CompanyMapper.xml"/>
+        <mapper resource="mapper/FundMapper.xml"/>
     </mappers>
 
 </configuration>

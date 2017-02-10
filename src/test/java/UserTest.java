@@ -3,8 +3,10 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import stock.po.Company;
+import stock.po.Fund;
 import stock.po.User;
 import stock.service.CompanyService;
+import stock.service.FundService;
 import stock.service.UserService;
 
 import java.util.Random;
@@ -56,5 +58,20 @@ public class UserTest {
                 .industry("J")
                 .build();
         service.insert(company);
+    }
+
+    @Test
+    public void testFund(){
+        FundService service = (FundService) applicationContext.getBean("fundService");
+        Fund fund = new Fund();
+        fund.setFundCode("200000");
+        fund.setFundName("新安");
+//        fund.setId(12);
+        fund.setDailyGrowthRate("12.3%");
+        fund.setMonthlyGrowthRate("13.2%");
+
+//        fund.setStartAmount(.12f);
+        int result = service.insert(fund);
+        System.out.println(result);
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="stock.mapper.FundMapper">
+
+    <resultMap id="BaseResultMap" type="stock.po.Fund">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="fund_code" property="fundCode" jdbcType="VARCHAR"/>
+        <result column="fund_name" property="fundName" jdbcType="VARCHAR"/>
+        <result column="daily_growth_rate" property="dailyGrowthRate" jdbcType="VARCHAR"/>
+        <result column="monthly_growth_rate" property="monthlyGrowthRate" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id,fund_code,fund_name,daily_growth_rate,monthly_growth_rate
+    </sql>
+
+    <insert id="insert" parameterType="stock.po.Fund">
+        INSERT INTO fund(
+        <include refid="BaseColumnList"/>
+        )
+        VALUES (
+        #{id,jdbcType=INTEGER},
+        #{fundCode,jdbcType=VARCHAR},
+        #{fundName,jdbcType=VARCHAR},
+        #{dailyGrowthRate,jdbcType=VARCHAR},
+        #{monthlyGrowthRate,jdbcType=VARCHAR}
+        )
+    </insert>
+
+</mapper>

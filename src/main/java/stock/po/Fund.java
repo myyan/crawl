@@ -15,5 +15,4 @@ public class Fund {
     private String fundName;
     private String dailyGrowthRate;
     private String monthlyGrowthRate;
-//    private float startAmount;
 }

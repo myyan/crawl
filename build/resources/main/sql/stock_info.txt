@@ -1,6 +1,0 @@
-CREATE TABLE `stock_info` (
-  `stock_id` bigint(20) NOT NULL COMMENT '股票id',
-  `stock_name` varchar(255) DEFAULT NULL COMMENT '股票名称',
-  PRIMARY KEY (`stock_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='股票信息表';
-

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="stock.mapper.CompanyMapper">
+
+    <resultMap id="BaseResultMap" type="stock.po.Company">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="company_code" property="companyCode" jdbcType="VARCHAR"/>
+        <result column="company_name" property="companyName" jdbcType="VARCHAR"/>
+        <result column="stock_code" property="stockCode" jdbcType="VARCHAR"/>
+        <result column="industry" property="industry" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id,company_code,company_name,stock_code,industry
+    </sql>
+
+    <insert id="insert" parameterType="stock.po.Company">
+        INSERT INTO company(
+        <include refid="BaseColumnList"/>
+        )
+        VALUES (
+        #{id,jdbcType=INTEGER},
+        #{companyCode,jdbcType=VARCHAR},
+        #{companyName,jdbcType=VARCHAR},
+        #{stockCode,jdbcType=VARCHAR},
+        #{industry,jdbcType=VARCHAR}
+        )
+    </insert>
+
+
+</mapper>

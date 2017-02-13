@@ -3,5 +3,8 @@ CREATE TABLE `company` (
   `name` varchar(255) DEFAULT NULL COMMENT '公司名称',
   `industry` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司表';
+)
+COMMENT='公司表'
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8 ;
 

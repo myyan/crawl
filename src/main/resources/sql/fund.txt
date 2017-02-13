@@ -1,0 +1,19 @@
+DROP TABLE IF EXISTS `fund`;
+CREATE TABLE `fund` (
+    `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+    `fund_code` varchar(255) DEFAULT NULL COMMENT '基金代码',
+    `fund_name` varchar(255) DEFAULT NULL COMMENT '基金简介',
+    `latest_net_worth` double DEFAULT NULL COMMENT '最新净值',
+    `one_day_growth_rate` float(5,2) DEFAULT NULL COMMENT '日增长率',
+    `one_month_growth_rate` float(5,2) DEFAULT NULL COMMENT '近一月增长率',
+    `three_month_growth_rate` float(5,2) DEFAULT NULL COMMENT '近三月增长率',
+    `one_year_growth_rate` float(5,2) DEFAULT NULL COMMENT '近一年增长率',
+    `since_this_year_growth_rate` float(5,2) DEFAULT NULL COMMENT '今年以来增长率',
+    `since_founded_growth_rate` float(5,2) DEFAULT NULL COMMENT '成立以来增长率',
+    `start_amount` float DEFAULT NULL COMMENT '起投金额(元)',
+    `create_time` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`)
+)
+COMMENT='基金表'
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8 ;

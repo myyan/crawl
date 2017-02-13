@@ -3,16 +3,23 @@
 
 <mapper namespace="stock.mapper.FundMapper">
 
+
     <resultMap id="BaseResultMap" type="stock.po.Fund">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="fund_code" property="fundCode" jdbcType="VARCHAR"/>
         <result column="fund_name" property="fundName" jdbcType="VARCHAR"/>
-        <result column="daily_growth_rate" property="dailyGrowthRate" jdbcType="VARCHAR"/>
-        <result column="monthly_growth_rate" property="monthlyGrowthRate" jdbcType="VARCHAR"/>
+        <result column="latest_net_worth" property="latestNetWorth" jdbcType="DOUBLE"/>
+        <result column="one_day_growth_rate" property="oneDayGrowthRate" jdbcType="FLOAT"/>
+        <result column="one_month_growth_rate" property="oneMonthGrowthRate" jdbcType="FLOAT"/>
+        <result column="three_month_growth_rate" property="threeMonthGrowthRate" jdbcType="FLOAT"/>
+        <result column="one_year_growth_rate" property="oneYearGrowthRate" jdbcType="FLOAT"/>
+        <result column="since_this_year_growth_rate" property="sinceThisYearGrowthRate" jdbcType="FLOAT"/>
+        <result column="since_founded_growth_rate" property="sinceFoundedGrowthRate" jdbcType="FLOAT"/>
+        <result column="start_amount" property="startAmount" jdbcType="FLOAT"/>
     </resultMap>
 
     <sql id="BaseColumnList">
-        id,fund_code,fund_name,daily_growth_rate,monthly_growth_rate
+        id,fund_code,fund_name,latest_net_worth,one_day_growth_rate,one_month_growth_rate,three_month_growth_rate,one_year_growth_rate,since_this_year_growth_rate,since_founded_growth_rate,start_amount,create_time
     </sql>
 
     <insert id="insert" parameterType="stock.po.Fund">
@@ -23,8 +30,15 @@
         #{id,jdbcType=INTEGER},
         #{fundCode,jdbcType=VARCHAR},
         #{fundName,jdbcType=VARCHAR},
-        #{dailyGrowthRate,jdbcType=VARCHAR},
-        #{monthlyGrowthRate,jdbcType=VARCHAR}
+        #{latestNetWorth,jdbcType=DOUBLE},
+        #{oneDayGrowthRate,jdbcType=FLOAT},
+        #{oneMonthGrowthRate,jdbcType=FLOAT},
+        #{threeMonthGrowthRate,jdbcType=FLOAT},
+        #{oneYearGrowthRate,jdbcType=FLOAT},
+        #{sinceThisYearGrowthRate,jdbcType=FLOAT},
+        #{sinceFoundedGrowthRate,jdbcType=FLOAT},
+        #{startAmount,jdbcType=FLOAT},
+        NOW()
         )
     </insert>
 

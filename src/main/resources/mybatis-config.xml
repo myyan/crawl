@@ -21,6 +21,7 @@
         <mapper resource="mapper/UserMapper.xml" />
         <mapper resource="mapper/CompanyMapper.xml"/>
         <mapper resource="mapper/FundMapper.xml"/>
+        <mapper resource="mapper/TestMapper.xml"/>
     </mappers>
 
 </configuration>

@@ -13,6 +13,13 @@ public class Fund {
     private int id;
     private String fundCode;
     private String fundName;
-    private String dailyGrowthRate;
-    private String monthlyGrowthRate;
+    private Double latestNetWorth;
+    private Float oneDayGrowthRate;
+    private Float oneMonthGrowthRate;
+    private Float threeMonthGrowthRate;
+    private Float oneYearGrowthRate;
+    private Float sinceThisYearGrowthRate;
+    private Float sinceFoundedGrowthRate;
+    private Float startAmount;
+
 }

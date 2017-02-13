@@ -7,6 +7,7 @@ import stock.po.Fund;
 import stock.po.User;
 import stock.service.CompanyService;
 import stock.service.FundService;
+import stock.service.TestService;
 import stock.service.UserService;
 
 import java.util.Random;
@@ -67,11 +68,18 @@ public class UserTest {
         fund.setFundCode("200000");
         fund.setFundName("新安");
 //        fund.setId(12);
-        fund.setDailyGrowthRate("12.3%");
-        fund.setMonthlyGrowthRate("13.2%");
 
 //        fund.setStartAmount(.12f);
         int result = service.insert(fund);
+        System.out.println(result);
+    }
+
+    @Test
+    public void testT(){
+        TestService testService = (TestService) applicationContext.getBean("testService");
+        stock.po.Test test = new stock.po.Test();
+        test.setPrice(123);
+        int result = testService.insert(test);
         System.out.println(result);
     }
 }

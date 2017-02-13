@@ -39,11 +39,10 @@ public class NewFundProcessor implements PageProcessor {
 
     @Override
     public void process(Page page) {
-        System.out.println("first ------------------");
         List<String> list = page.getHtml().xpath("div[@class='listTable']/table[@id='fundTable']/tbody/tr").all();
 
         for (int i = 0; i < list.size(); i++) {
-            System.out.println("size:"+list.size());
+            System.out.println("size:" + list.size());
             Html h = new Html(list.get(i).replace("td", "div"));
             String fundCode = h.xpath("//div[1]/text()").get();
             String fundName = h.xpath("//div[2]/a/text()").get();
@@ -57,17 +56,6 @@ public class NewFundProcessor implements PageProcessor {
             String sinceFoundedGrowthRate = h.xpath("//div[9]/span/text()").get();
             String sAmount = h.xpath("//div[10]/text()").get();
             Float startAmount = stringToFloat(sAmount);
-//            System.out.println("基金代码:" + h.xpath("//div[1]/text()"));
-//            System.out.println("基金简介:" + h.xpath("//div[2]/a/text()"));
-//            System.out.println("最新净值:" + h.xpath("//div[3]/p[1]/text()"));
-//            System.out.println("时间:" + h.xpath("//p[2]/text()"));
-//            System.out.println("日增长率:" + h.xpath("//div[4]/span/text()"));
-//            System.out.println("最近一月增长率:" + h.xpath("//div[5]/span/text()"));
-//            System.out.println("最近三月增长率:" + h.xpath("//div[6]/span/text()"));
-//            System.out.println("最近一年增长率:" + h.xpath("//div[7]/span/text()"));
-//            System.out.println("今年增长率:" + h.xpath("//div[8]/span/text()"));
-//            System.out.println("成立以来增长率:" + h.xpath("//div[9]/span/text()"));
-//            System.out.println("起投金额:" + startAmount);
 
             Fund fund = new Fund();
             fund.setFundCode(fundCode);
@@ -80,17 +68,8 @@ public class NewFundProcessor implements PageProcessor {
             fund.setSinceThisYearGrowthRate(growthRateFormatter(thisYearGrowthRate));
             fund.setSinceFoundedGrowthRate(growthRateFormatter(sinceFoundedGrowthRate));
             fund.setStartAmount(startAmount);
-            int result = fundService.insert(fund);
-            System.out.println(result);
-
-            System.out.println("-------");
-
+            fundService.insert(fund);
         }
-
-
-        System.out.println("size:" + list.size());
-
-
     }
 
     private static Float stringToFloat(String str) {
@@ -139,10 +118,5 @@ public class NewFundProcessor implements PageProcessor {
                 .startUrls(urls)
                 .thread(10)
                 .runAsync();
-//        Spider.create(processor)
-//                .addUrl("https://e.lufunds.com/jijin/allFund?subType=&haitongGrade=&fundGroupId=&currentPage=1&orderType=twelve_month_increase_desc&canFixInvest=&searchWord=#sortTab")
-//                .thread(5)
-//                .runAsync();
-
     }
 }

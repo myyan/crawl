@@ -48,7 +48,7 @@ public class EastMoneyFundPageProcessor implements PageProcessor {
 
     public static void main(String[] args) {
         Spider.create(new EastMoneyFundPageProcessor())
-                .addUrl("http://fund.eastmoney.com/Data/Fund_JJJZ_Data.aspx?t=1&lx=1&letter=&gsid=&text=&sort=zdf,desc&page=1,1&dt=1486531403178&atfc=&onlySale=0")
+                .addUrl("http://fund.eastmoney.com/DataJson/Fund_JJJZ_Data.aspx?t=1&lx=1&letter=&gsid=&text=&sort=zdf,desc&page=1,1&dt=1486531403178&atfc=&onlySale=0")
                 .run();
     }
 }

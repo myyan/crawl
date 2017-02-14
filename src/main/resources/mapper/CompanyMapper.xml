@@ -27,5 +27,32 @@
         )
     </insert>
 
+    <insert id="insertAll" parameterType="java.util.List">
+        INSERT INTO company (
+        <include refid="BaseColumnList"/>
+        )
+        VALUES
+        <foreach collection="list" item="element" index="index" open="(" separator="),(" close=")">
+            #{element.id},
+            #{element.companyCode},
+            #{element.companyName},
+            #{element.stockCode},
+            #{element.industry}
+        </foreach>
+    </insert>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from company
+    </select>
+
+    <select id="selectByCode" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumnList"/>
+        FROM company
+        where company_code = #{companyCode}
+    </select>
+
 
 </mapper>

@@ -28,6 +28,8 @@ public class SzCompanyProcessor implements PageProcessor {
 
 
     public void process(Page page) {
+        System.out.println(page.getHtml());
+        System.out.println(page.getHtml().xpath("table[id='REPORTID_tab1']"));
         System.out.println(page.getRawText());
         System.out.println("url:"+page.getUrl());
 
@@ -40,20 +42,10 @@ public class SzCompanyProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) throws IOException {
-//        HttpClient client = new DefaultHttpClient();
-//        HttpGet get = new HttpGet("https://www.baidu.com");
-//        HttpGet httpGet = new HttpGet("http://nufm.dfcfw.com/EM_Finance2014NumericApplication/JS.aspx?type=CT&cmd=C._A&sty=FCOIATA&sortType=C&sortRule=-1&page=2&pageSize=20&js=var%20quote_123%3d{rank:[(x)],pages:(pc)}&token=7bc05d0d4c3c22ef9fca8c2a912d779c&jsName=quote_123&_g=0.6434791462295828");
-//        HttpResponse response = client.execute(get);
-        URL url = new URL("http://nufm.dfcfw.com/EM_Finance2014NumericApplication/JS.aspx?type=CT&cmd=C._A&sty=FCOIATA&sortType=C&sortRule=-1&page=2&pageSize=20&js=var%20quote_123%3d{rank:[(x)],pages:(pc)}&token=7bc05d0d4c3c22ef9fca8c2a912d779c&jsName=quote_123&_g=0.6434791462295828");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        OutputStream stream = connection.getOutputStream();
-        System.out.println(stream);
-//        System.out.println(response);
-//        System.out.println(response.getEntity());
-//        Spider.create(new SzCompanyProcessor())
-////                .addUrl("https://www.baidu.com")
-//                .addUrl("http://nufm.dfcfw.com/EM_Finance2014NumericApplication/JS.aspx?type=CT&cmd=C._A&sty=FCOIATA&sortType=C&sortRule=-1&page=2&pageSize=20&js=var%20quote_123%3d{rank:[(x)],pages:(pc)}&token=7bc05d0d4c3c22ef9fca8c2a912d779c&jsName=quote_123&_g=0.6434791462295828")
-//                .thread(5)
-//                .run();
+
+        Spider.create(new SzCompanyProcessor())
+                .addUrl("http://www.sse.com.cn/assortment/stock/list/info/company/index.shtml?COMPANY_CODE=601118")
+                .thread(5)
+                .run();
     }
 }

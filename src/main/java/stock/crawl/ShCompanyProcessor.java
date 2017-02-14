@@ -24,15 +24,15 @@ public class ShCompanyProcessor implements PageProcessor {
 
     private final String ORIGIN_URL = "http://www\\.sse\\.com\\.cn/assortment/stock/areatrade/trade/detail\\.shtml\\?csrcCode=C";
     public void process(Page page) {
-        if (page.getUrl().regex(ORIGIN_URL).match()){
+//        if (page.getUrl().regex(ORIGIN_URL).match()){
             WebDriver driver = new ChromeDriver();
-            driver.get("http://www.sse.com.cn/assortment/stock/areatrade/trade/detail.shtml?csrcCode=C");
+            driver.get("http://www.cninfo.com.cn/information/sh/mb/shmblclist.html");
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            WebElement element = driver.findElement(By.xpath("//table[@class='table search_']//a"));
+            WebElement element = driver.findElement(By.xpath("/html"));
             String str=element.getAttribute("outerHTML");
             System.out.println(str);
             driver.close();
@@ -46,7 +46,7 @@ public class ShCompanyProcessor implements PageProcessor {
 //            List<String> list = page.getHtml().links().all();
 //            System.out.println(list);
 //            page.addTargetRequests(page.getHtml().links().regex(REG).all());
-        }
+//        }
 
     }
 
@@ -63,7 +63,7 @@ public class ShCompanyProcessor implements PageProcessor {
 //                    .runAsync();
 //        }
         Spider.create(new ShCompanyProcessor())
-                .addUrl("http://www.sse.com.cn/assortment/stock/areatrade/trade/detail.shtml?csrcCode=C")
+                .addUrl("http://www.cninfo.com.cn/information/sh/mb/shmblclist.html")
                 .thread(5)
                 .run();
     }

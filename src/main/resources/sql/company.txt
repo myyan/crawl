@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `company` ;
 CREATE TABLE `company` (
   `company_id` bigint(20) NOT NULL COMMENT '公司id',
   `name` varchar(255) DEFAULT NULL COMMENT '公司名称',

@@ -17,4 +17,8 @@ public interface CompanyMapper {
     List<Company> selectAll();
 
     int update(Company company);
+
+    int insertAll(List<Company> companies);
+
+    Company selectByCode(String companyCode);
 }

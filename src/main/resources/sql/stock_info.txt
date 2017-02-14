@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `stock_info` ;
 CREATE TABLE `stock_info` (
   `stock_id` bigint(20) NOT NULL COMMENT '股票id',
   `stock_name` varchar(255) DEFAULT NULL COMMENT '股票名称',

@@ -36,4 +36,12 @@ public class CompanyService {
         return mapper.update(company);
     }
 
+    public int insertAll(List<Company> companies){
+        return mapper.insertAll(companies);
+    }
+
+    public Company selectByCode(String companyCode){
+        return mapper.selectByCode(companyCode);
+    }
+
 }

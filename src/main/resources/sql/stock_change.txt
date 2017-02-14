@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `stock_change` ;
 CREATE TABLE `stock_change` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `stock_id` int(11) NOT NULL COMMENT '股票id',

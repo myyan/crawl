@@ -24,7 +24,7 @@ public class JsonData {
 
     @Override
     public String toString() {
-        return "JsonData{" +
+        return "DataJson{" +
                 "pages=" + pages +
                 ", data=" + data +
                 '}';

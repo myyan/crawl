@@ -1,5 +1,6 @@
 package stock.crawl;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,9 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by heiqie on 2017/2/8.
@@ -26,6 +29,8 @@ public class CompanyProcessor implements PageProcessor {
 
     private CompanyService companyService;
 
+    private boolean isFirst;
+
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000).setTimeOut(3000)
             .setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36");
 
@@ -35,12 +40,13 @@ public class CompanyProcessor implements PageProcessor {
     }
 
     public void process(Page page) {
-
-
+        List<Company> insertCompanys = new ArrayList<>();
+        List<Company> updateCompanys = new ArrayList<>();
+        List<Company> companyList = companyService.selectAll();
+        List<String> companyCodes = companyList.stream().map(Company::getCompanyCode).collect(Collectors.toList());
         String body = page.getHtml().xpath("//body/text()").get();
         body = body.replace("(", "").replace("[", "").replace("]", "").replace(")", "");
         String[] temp = body.split("\",");
-        List<Company> companies = new ArrayList<Company>();
         if (temp != null && temp.length > 0) {
             temp[0] = temp[0].replace("\"", "");
             for (int i = 1; i < temp.length; i++) {
@@ -49,16 +55,54 @@ public class CompanyProcessor implements PageProcessor {
             for (String t : temp) {
                 String[] elements = t.split(",");
                 if (elements != null && elements.length > 0) {
-                    Company company = new Company();
-                    company.setCompanyCode(elements[1]);
-                    company.setCompanyName(elements[2]);
-                    companies.add(company);
+
+
+                    String companyCode = elements[1];
+                    String stockName = elements[2];
+                    if (companyCodes.contains(companyCode)) {
+                        Company company = companyList.stream().filter(x -> x.getCompanyCode().equals(companyCode)).findFirst().get();
+                        company.setStockName(stockName);
+                        updateCompanys.add(company);
+                    } else {
+                        Company company = new Company();
+                        company.setCompanyCode(companyCode);
+                        company.setStockName(stockName);
+                        company.setActive(1);
+                        if (companyCode != null) {
+                            int code = Integer.valueOf(companyCode);
+                            if (code > 600000) {
+                                company.setType(0);
+                            } else {
+                                company.setType(1);
+                            }
+                        }
+                        insertCompanys.add(company);
+                    }
+
                 }
             }
         }
-        System.out.println("insert batch company over:");
-        int result = companyService.insertAll(companies);
-        System.out.println(result);
+        log.info("before batch insert operation:");
+        try {
+            if (updateCompanys.size() != 0) {
+//                int result2 = companyService.batchUpdate(updateCompanys);
+                updateCompanys.forEach(x->{
+                    int result = companyService.update(x);
+                    log.info("result:{}", result);
+                });
+
+            }
+            if (insertCompanys.size() != 0) {
+                int result = companyService.insertAll(insertCompanys);
+                log.info("result :{}", result);
+            }
+
+        } catch (Exception e) {
+            log.info("exception occur:{}", e);
+            if (e instanceof MySQLIntegrityConstraintViolationException) {
+                log.info("ok");
+            }
+        }
 
 
     }
@@ -76,11 +120,38 @@ public class CompanyProcessor implements PageProcessor {
 
     @Test
     public void test() {
-        log.info("ee");
+        log.info("start");
 
         Company company = new Company();
         company.setCompanyName("test");
+        company.setType(1);
+
+
+
+
+
         int result = companyService.insert(company);
         System.out.println(result);
     }
+
+    @Test
+    public void test2() {
+        List<Company> companies = companyService.selectByType(0);
+        for (Company c : companies) {
+            System.out.println(c);
+        }
+    }
+
+    @Test
+    public void testUpdate() {
+        Company company = companyService.selectByCode("600000");
+        log.info("company:{}", company);
+        company.setCompanyName("测试1");
+        List<Company> companies = Arrays.asList(company);
+//        int result = companyService.update(company);
+        int result = companyService.batchUpdate(companies);
+        log.info("result :{}", result);
+    }
+
+
 }

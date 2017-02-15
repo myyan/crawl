@@ -36,12 +36,20 @@ public class CompanyService {
         return mapper.update(company);
     }
 
-    public int insertAll(List<Company> companies){
+    public int insertAll(List<Company> companies) {
         return mapper.insertAll(companies);
     }
 
-    public Company selectByCode(String companyCode){
+    public Company selectByCode(String companyCode) {
         return mapper.selectByCode(companyCode);
+    }
+
+    public List<Company> selectByType(int type) {
+        return mapper.selectByType(type);
+    }
+
+    public int batchUpdate(List<Company> companies){
+        return mapper.batchUpdate(companies);
     }
 
 }

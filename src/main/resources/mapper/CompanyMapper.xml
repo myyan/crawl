@@ -6,12 +6,20 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="company_code" property="companyCode" jdbcType="VARCHAR"/>
         <result column="company_name" property="companyName" jdbcType="VARCHAR"/>
-        <result column="stock_code" property="stockCode" jdbcType="VARCHAR"/>
+        <result column="stock_name" property="stockName" jdbcType="VARCHAR"/>
         <result column="industry" property="industry" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="active" property="type" jdbcType="TINYINT"/>
+        <result column="register_address" property="registerAddress" jdbcType="VARCHAR"/>
+        <result column="register_capital" property="registerCapital" jdbcType="VARCHAR"/>
+        <result column="establish_date" property="establishDate" jdbcType="TIMESTAMP"/>
+        <result column="listing_date" property="listingDate" jdbcType="TIMESTAMP"/>
+        <result column="legal_representative" property="legalRepresentative" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="BaseColumnList">
-        id,company_code,company_name,stock_code,industry
+        id,company_code,company_name,stock_name,industry,type,
+        active,register_address,register_capital,establish_date,listing_date,legal_representative
     </sql>
 
     <insert id="insert" parameterType="stock.po.Company">
@@ -22,8 +30,15 @@
         #{id,jdbcType=INTEGER},
         #{companyCode,jdbcType=VARCHAR},
         #{companyName,jdbcType=VARCHAR},
-        #{stockCode,jdbcType=VARCHAR},
-        #{industry,jdbcType=VARCHAR}
+        #{stockName,jdbcType=VARCHAR},
+        #{industry,jdbcType=VARCHAR},
+        #{type,jdbcType=TINYINT},
+        #{active,jdbcType=TINYINT},
+        #{registerAddress,jdbcType=VARCHAR},
+        #{registerCapital,jdbcType=VARCHAR},
+        #{establishDate,jdbcType=TIMESTAMP},
+        #{listingDate,jdbcType=TIMESTAMP},
+        #{legalRepresentative,jdbcType=VARCHAR}
         )
     </insert>
 
@@ -36,10 +51,23 @@
             #{element.id},
             #{element.companyCode},
             #{element.companyName},
-            #{element.stockCode},
-            #{element.industry}
+            #{element.stockName},
+            #{element.industry},
+            #{element.type},
+            #{element.active},
+            #{element.registerAddress},
+            #{element.registerCapital},
+            #{element.establishDate},
+            #{element.listingDate},
+            #{element.legalRepresentative}
         </foreach>
     </insert>
+    <select id="selectOne" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumnList"/>
+        from company
+        where id = #{id}
+    </select>
 
     <select id="selectAll" resultMap="BaseResultMap">
         select
@@ -53,6 +81,45 @@
         FROM company
         where company_code = #{companyCode}
     </select>
+
+    <select id="selectByType" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumnList"/>
+        FROM company
+        where type = #{type}
+    </select>
+
+
+
+
+    <update id="update">
+        update company set
+        company_code = #{companyCode},
+        company_name = #{companyName},
+        stock_name = #{stockName},
+        industry = #{industry},
+        type = #{type},
+        active = #{active},
+        register_address = #{registerAddress},
+        register_capital = #{registerCapital},
+        establish_date = #{establishDate},
+        legal_representative = #{legalRepresentative},
+        establish_date = #{establishDate},
+        listing_date = #{listingDate}
+        where id = #{id}
+    </update>
+
+
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update company
+            <set>
+                company_code = ${item.companyCode,jdbcType=VARCHAR},
+                company_name = ${item.companyName,jdbcType=VARCHAR}
+            </set>
+            where id = ${item.id}
+        </foreach>
+    </update>
 
 
 </mapper>

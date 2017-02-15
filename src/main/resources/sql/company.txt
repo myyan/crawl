@@ -1,11 +1,27 @@
 DROP TABLE IF EXISTS `company` ;
 CREATE TABLE `company` (
-  `company_id` bigint(20) NOT NULL COMMENT '公司id',
-  `name` varchar(255) DEFAULT NULL COMMENT '公司名称',
-  `industry` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`company_id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_code` varchar(255) NOT NULL COMMENT '公司代码',
+  `company_name` varchar(255) DEFAULT NULL COMMENT '公司名称',
+  `stock_name` varchar(255) DEFAULT NULL COMMENT '股票代码',
+  `industry` varchar(255) DEFAULT NULL COMMENT '产业',
+  `register_address` varchar(255) DEFAULT NULL COMMENT '注册地址',
+  `register_capital` varchar(255) DEFAULT NULL COMMENT '注册资本',
+  `establish_date` datetime DEFAULT NULL COMMENT '成立日期',
+  `listing_date` datetime DEFAULT NULL COMMENT '上市日期',
+  `type` tinyint(4) DEFAULT NULL COMMENT '0(上交所),1(深交所)',
+  `active` tinyint(4) DEFAULT '1' COMMENT '是否在市(1,在市;0,下市)',
+  `legal_representative` varchar(255) DEFAULT NULL COMMENT '法人代表',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `company_code` (`company_code`)
 )
 COMMENT='公司表'
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8 ;
+
+
+
+
+
+
 

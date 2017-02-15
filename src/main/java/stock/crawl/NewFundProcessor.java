@@ -68,7 +68,13 @@ public class NewFundProcessor implements PageProcessor {
             fund.setSinceThisYearGrowthRate(growthRateFormatter(thisYearGrowthRate));
             fund.setSinceFoundedGrowthRate(growthRateFormatter(sinceFoundedGrowthRate));
             fund.setStartAmount(startAmount);
-            fundService.insert(fund);
+
+
+
+
+
+
+
         }
     }
 

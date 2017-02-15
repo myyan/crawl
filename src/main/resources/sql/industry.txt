@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS `industry`;
+CREATE TABLE `industry` (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `industry_code` varchar(11) DEFAULT NULL COMMENT '行业代码',
+  `industry_name` varchar(255) DEFAULT NULL COMMENT '行业名称',
+  PRIMARY KEY (`id`)
+)
+COMMENT='行业表'
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8 ;
+
+
+

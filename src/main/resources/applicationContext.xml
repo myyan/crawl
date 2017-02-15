@@ -52,5 +52,9 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
+    <bean id ="industryMapper"  class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="stock.mapper.IndustryMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
 
 </beans>

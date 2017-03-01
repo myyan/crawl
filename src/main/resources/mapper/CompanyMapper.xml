@@ -90,12 +90,14 @@
     </select>
 
 
-
-
     <update id="update">
         update company set
         company_code = #{companyCode},
-        company_name = #{companyName},
+
+        <if test="companyName != null">
+            company_name = #{companyName},
+        </if>
+
         stock_name = #{stockName},
         industry = #{industry},
         type = #{type},
